@@ -24,7 +24,7 @@ pipeline {
                         extensions: [[$class: 'LocalBranch']],
                         submoduleCfg: [],
                         userRemoteConfigs: [[
-                            url: 'https://github.com/cyprientemateu/A1-DEVOPS.git',
+                            url: 'https://github.com/cyprientemateu/jenkins-test.git',
                             credentialsId: 'github-auth'
                         ]]
                     ])
@@ -51,7 +51,7 @@ pipeline {
         }
         stage('Remove Existing sonar-project.properties') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/application/weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Check if sonar-project.properties exists and remove it if found
                         if (fileExists('sonar-project.properties')) {
@@ -63,7 +63,7 @@ pipeline {
         }
         stage('Create sonar-project.properties') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/application/weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Define the content of sonar-project.properties
                         def sonarProjectPropertiesContent = """
@@ -83,7 +83,7 @@ pipeline {
         }
         stage('Open sonar-project.properties') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/application/weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Use 'cat' command to display the content of sonar-project.properties
                         sh 'cat sonar-project.properties'
@@ -93,7 +93,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/application/weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         withSonarQubeEnv('SonarScanner') {
                             sh "sonar-scanner"
@@ -182,7 +182,7 @@ pipeline {
 // Function to build Docker image for a service
 def buildDockerImage(serviceName) {
     script {
-        dir("${WORKSPACE}/tcc-weather-app/application/weather-app/code/${serviceName}") {
+        dir("${WORKSPACE}/tcc-weather-app/code/${serviceName}") {
             // Adjust the Docker build command based on your Dockerfile location and image name
             sh "sudo docker-compose build -t cyprientemateu/${serviceName}:latest ."
             sh "sudo docker images"
