@@ -31,24 +31,6 @@ pipeline {
                 }
             }
         }
-        stage ('Install SonarQube') {
-            steps {
-                script {
-                    sh """
-                        sudo apt update -y
-                        sudo apt install nodejs npm wget unzip -y              
-                        wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${params.SONAR_VERSION}-linux.zip
-                        unzip sonar-scanner-cli-${params.SONAR_VERSION}-linux.zip
-                        sudo mv sonar-scanner-${params.SONAR_VERSION}-linux sonar-scanner
-                        sudo rm -rf  /var/opt/sonar-scanner || true
-                        sudo mv sonar-scanner /var/opt/
-                        sudo rm -rf /usr/local/bin/sonar-scanner || true
-                        sudo ln -s /var/opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/ || true
-                        sonar-scanner -v
-                    """
-                }
-            }
-        }
         stage('Remove Existing sonar-project.properties') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
