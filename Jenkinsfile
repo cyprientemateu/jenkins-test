@@ -43,26 +43,26 @@ pipeline {
                 }
             }
         }
-        stage('Create sonar-project.properties') {
-            steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
-                    script {
-                        // Define the content of sonar-project.properties
-                        def sonarProjectPropertiesContent = """
-                            sonar.host.url=https://sonarqube.ektechsoftwaresolution.com/
-                            sonar.projectKey=tcc-sonar-weather-app-project
-                            sonar.projectName=tcc-sonar-weather-app-project
-                            sonar.projectVersion=1.0
-                            sonar.sources=.
-                            qualitygate.wait=true 
-                        """
+        // stage('Create sonar-project.properties') {
+        //     steps {
+        //         dir("${WORKSPACE}/tcc-weather-app/code") {
+        //             script {
+        //                 // Define the content of sonar-project.properties
+        //                 def sonarProjectPropertiesContent = """
+        //                     sonar.host.url=https://sonarqube.ektechsoftwaresolution.com/
+        //                     sonar.projectKey=tcc-sonar-weather-app-project
+        //                     sonar.projectName=tcc-sonar-weather-app-project
+        //                     sonar.projectVersion=1.0
+        //                     sonar.sources=.
+        //                     qualitygate.wait=true 
+        //                 """
 
-                        // Create the sonar-project.properties file
-                        writeFile file: 'sonar-project.properties', text: sonarProjectPropertiesContent
-                    }
-                }
-            }
-        }
+        //                 // Create the sonar-project.properties file
+        //                 writeFile file: 'sonar-project.properties', text: sonarProjectPropertiesContent
+        //             }
+        //         }
+        //     }
+        // }
         stage('Open sonar-project.properties') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
