@@ -63,6 +63,16 @@ pipeline {
                 }
             }
         }
+        stage('Build auth') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image for auth
+                        sh 'sudo docker push cyprientemateu/sixfure-auth:latest'
+                    }
+                }
+            }
+        }
         stage('Build db') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
