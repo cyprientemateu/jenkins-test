@@ -97,7 +97,8 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image
-                        sh 'sudo docker build -t tcc-app -f code/weather/Dockerfile . && sudo docker images'
+                        sh 'sudo docker build -t tcc-app -f weather/Dockerfile . && sudo docker images'
+                        // sh 'pwd && ls -l'
                         sh 'sudo docker ps'
                     }
                 }
