@@ -91,7 +91,8 @@ pipeline {
                     }
                 }
             }
-        }stage('Build weather') {
+        }
+        stage('Build weather') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
