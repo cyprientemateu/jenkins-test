@@ -2,13 +2,13 @@
 # Pipeline
 # Plugins installation and configuration
 
-''' 
-    - Docker
-    - SonarQube Scanner
-    - AwS credential
-    - Slack notification
-
 '''
+   - SonarQube Scanner
+   - Docker
+   - AWS credential
+   - Slack Notification
+'''   
+
 # Configurations
 
 '''
