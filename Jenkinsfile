@@ -3,7 +3,7 @@ pipeline {
         label ''
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '7'))
+        buildDiscarder(logRotator(numToKeepStr: '3'))
         skipDefaultCheckout(true)
         disableConcurrentBuilds()
         timeout (time: 5, unit: 'MINUTES')
