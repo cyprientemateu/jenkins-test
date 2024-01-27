@@ -102,8 +102,6 @@ pipeline {
                     script {
                         // Build the docker image for weather
                         sh 'sudo docker build -t tcc-app4 -f weather/Dockerfile .'
-                        sh 'sudo docker docker images'
-                        // sh 'pwd && ls -l'
                         sh 'sudo docker images'
                     }
                 }
