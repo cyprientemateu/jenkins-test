@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage('Build auth') {
+        stage('push auth') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
