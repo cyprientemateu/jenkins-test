@@ -85,6 +85,17 @@ pipeline {
                 }
             }
         }
+        stage('push db') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image for auth
+                        sh 'sudo docker login -u cyprientemateu -p cctemateu86'
+                        sh 'sudo docker push cyprientemateu/sixfure-db:latest'
+                    }
+                }
+            }
+        }
         stage('Build redis') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
@@ -92,6 +103,17 @@ pipeline {
                         // Build the Docker image for redis
                         sh 'sudo docker build -t cyprientemateu/sixfure-redis -f redis/Dockerfile .'
                         sh 'sudo docker images'
+                    }
+                }
+            }
+        }
+        stage('push redis') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image for auth
+                        sh 'sudo docker login -u cyprientemateu -p cctemateu86'
+                        sh 'sudo docker push cyprientemateu/sixfure-redis:latest'
                     }
                 }
             }
