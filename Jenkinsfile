@@ -31,38 +31,6 @@ pipeline {
                 }
             }
         }
-        // stage('Remove Existing sonar-project.properties') {
-        //     steps {
-        //         dir("${WORKSPACE}/tcc-weather-app/code") {
-        //             script {
-        //                 // Check if sonar-project.properties exists and remove it if found
-        //                 if (fileExists('sonar-project.properties')) {
-        //                     sh 'rm sonar-project.properties'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Create sonar-project.properties') {
-        //     steps {
-        //         dir("${WORKSPACE}/tcc-weather-app/code") {
-        //             script {
-        //                 // Define the content of sonar-project.properties
-        //                 def sonarProjectPropertiesContent = """
-        //                     sonar.host.url=https://sonarqube.ektechsoftwaresolution.com/
-        //                     sonar.projectKey=tcc-sonar-weather-app-project
-        //                     sonar.projectName=tcc-sonar-weather-app-project
-        //                     sonar.projectVersion=1.0
-        //                     sonar.sources=.
-        //                     qualitygate.wait=true 
-        //                 """
-
-        //                 // Create the sonar-project.properties file
-        //                 writeFile file: 'sonar-project.properties', text: sonarProjectPropertiesContent
-        //             }
-        //         }
-        //     }
-        // }
         stage('Open sonar-project.properties') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
@@ -84,7 +52,46 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+        stage('Build auth') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image
+                        sh 'sudo docker ps'
+                    }
+                }
+            }
+        }
+        stage('Build db') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image
+                        sh 'sudo docker ps'
+                    }
+                }
+            }
+        }
+        stage('Build redis') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image
+                        sh 'sudo docker ps'
+                    }
+                }
+            }
+        }
+        stage('Build ui') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image
+                        sh 'sudo docker ps'
+                    }
+                }
+            }
+        }stage('Build weather') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
