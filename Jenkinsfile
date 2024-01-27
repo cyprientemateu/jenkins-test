@@ -68,6 +68,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for auth
+                        sh 'sudo docker login -u cyprientemateu -p cctemateu86'
                         sh 'sudo docker push cyprientemateu/sixfure-auth:latest'
                     }
                 }
