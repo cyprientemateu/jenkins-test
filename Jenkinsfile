@@ -57,7 +57,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker build -t tcc-app -f auth/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-auth -f auth/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -68,7 +68,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for db
-                        sh 'sudo docker build -t tcc-app1 -f db/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-db -f db/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -79,7 +79,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for redis
-                        sh 'sudo docker build -t tcc-app2 -f redis/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-redis -f redis/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -90,7 +90,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for ui
-                        sh 'sudo docker build -t tcc-app3 -f ui/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-ui -f ui/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -101,7 +101,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the docker image for weather
-                        sh 'sudo docker build -t tcc-app4 -f weather/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-weather -f weather/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
