@@ -56,9 +56,9 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
-                        // Build the Docker image
+                        // Build the Docker image for auth
                         sh 'sudo docker build -t tcc-app -f auth/Dockerfile .'
-                        sh 'sudo docker ps'
+                        sh 'sudo docker images'
                     }
                 }
             }
@@ -67,8 +67,9 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
-                        // Build the Docker image
-                        sh 'sudo docker ps'
+                        // Build the Docker image for db
+                        sh 'sudo docker build -t tcc-app -f db/Dockerfile .'
+                        sh 'sudo docker images'
                     }
                 }
             }
@@ -77,8 +78,9 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
-                        // Build the Docker image
-                        sh 'sudo docker ps'
+                        // Build the Docker image for redis
+                        sh 'sudo docker build -t tcc-app -f redis/Dockerfile .'
+                        sh 'sudo docker images'
                     }
                 }
             }
@@ -87,8 +89,9 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
-                        // Build the Docker image
-                        sh 'sudo docker ps'
+                        // Build the Docker image for ui
+                        sh 'sudo docker build -t tcc-app -f ui/Dockerfile .'
+                        sh 'sudo docker images'
                     }
                 }
             }
@@ -97,11 +100,11 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
-                        // Build the Docker image
+                        // Build the docker image for weather
                         // sh 'sudo docker build -t tcc-app -f weather/Dockerfile .'
-                        sh 'sudo docker images'
+                        sh 'sudo docker docker images'
                         // sh 'pwd && ls -l'
-                        sh 'sudo docker ps'
+                        sh 'sudo docker images'
                     }
                 }
             }
