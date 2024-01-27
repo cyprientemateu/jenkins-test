@@ -31,18 +31,18 @@ pipeline {
                 }
             }
         }
-        stage('Remove Existing sonar-project.properties') {
-            steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
-                    script {
-                        // Check if sonar-project.properties exists and remove it if found
-                        if (fileExists('sonar-project.properties')) {
-                            sh 'rm sonar-project.properties'
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Remove Existing sonar-project.properties') {
+        //     steps {
+        //         dir("${WORKSPACE}/tcc-weather-app/code") {
+        //             script {
+        //                 // Check if sonar-project.properties exists and remove it if found
+        //                 if (fileExists('sonar-project.properties')) {
+        //                     sh 'rm sonar-project.properties'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         // stage('Create sonar-project.properties') {
         //     steps {
         //         dir("${WORKSPACE}/tcc-weather-app/code") {
@@ -84,30 +84,16 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Images') {
+        stage('Build') {
             steps {
-                script {
-                    // List of services
-                    def services = ['auth', 'db', 'redis', 'ui', 'weather']
-
-                    // Iterate over services and build Docker images
-                    for (service in services) {
-                        // Build Docker image for the current service
-                        buildDockerImage(service)
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        // Build the Docker image
+                        sh 'sudo docker ps'
                     }
                 }
             }
         }
-        // stage('Build') {
-        //     steps {
-        //         dir("${WORKSPACE}/tcc-weather-app") {
-        //             script {
-        //                 // Build the Docker image
-        //                 sh 'sudo docker build -t tcc-app -f application/weather-app/code/weather . && sudo docker images'
-        //             }
-        //         }
-        //     }
-        // }
 
         // New stage: Deploy
         // stage('Deploy') {
@@ -159,15 +145,5 @@ pipeline {
             "\n Action : Please check the console output to fix this job IMMEDIATELY" +
             "\n Build url : ${env.BUILD_URL}"
         }   
-    }
-}
-// Function to build Docker image for a service
-def buildDockerImage(serviceName) {
-    script {
-        dir("${WORKSPACE}/tcc-weather-app/code/${serviceName}") {
-            // Adjust the Docker build command based on your Dockerfile location and image name
-            sh "sudo docker-compose build -t cyprientemateu/${serviceName}:latest ."
-            sh "sudo docker images"
-        }
     }
 }
