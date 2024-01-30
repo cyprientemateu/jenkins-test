@@ -12,7 +12,7 @@
 '''
 
 
-## Pluggins Configuration
+## Plugins Configuration
 
 '''
    - Sonarqube credential
