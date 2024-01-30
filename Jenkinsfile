@@ -68,7 +68,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/auth") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker build -t cyprientemateu/sixfure-auth:v1.0.0 -f .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-auth:v1.0.0 .'
                         sh 'sudo docker images'
                     }
                 }
@@ -79,7 +79,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/db") {
                     script {
                         // Build the Docker image for db
-                        sh 'sudo docker build -t cyprientemateu/sixfure-db:v1.0.0 -f .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-db:v1.0.0 .'
                         sh 'sudo docker images'
                     }
                 }
@@ -90,7 +90,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/redis") {
                     script {
                         // Build the Docker image for redis
-                        sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 -f .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 .'
                         sh 'sudo docker images'
                     }
                 }
@@ -101,7 +101,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/ui") {
                     script {
                         // Build the Docker image for ui
-                        sh 'sudo docker build -t cyprientemateu/sixfure-ui:v1.0.0 -f .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-ui:v1.0.0 .'
                         sh 'sudo docker images'
                     }
                 }
