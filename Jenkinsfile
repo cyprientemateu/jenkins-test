@@ -139,7 +139,7 @@ pipeline {
                             sudo docker push cyprientemateu/sixfure-auth:v1.0.0
                             sudo docker push cyprientemateu/sixfure-db:v1.0.0
                             sudo docker push cyprientemateu/sixfure-redis:v1.0.0
-                            sudo docker push cyprientemateu/sixfure-ui:v.1.0.0
+                            sudo docker push cyprientemateu/sixfure-ui:v1.0.0
                             sudo docker push cyprientemateu/sixfure-weather:v1.0.0
                         """
                     }
