@@ -9,7 +9,7 @@ pipeline {
         DOCKER_HUB_REGISTRY = "cyprientemateu"
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '3'))
+        buildDiscarder(logRotator(numToKeepStr: '2'))
         skipDefaultCheckout(true)
         disableConcurrentBuilds()
         timeout (time: 15, unit: 'MINUTES')
