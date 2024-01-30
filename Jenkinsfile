@@ -74,16 +74,6 @@ pipeline {
                 }
             }
         }
-        stage('push auth') {
-            steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
-                    script {
-                        // Build the Docker image for auth
-                        sh 'sudo docker push cyprientemateu/sixfure-auth:v1.0.0'
-                    }
-                }
-            }
-        }
         stage('Build db') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
@@ -95,16 +85,6 @@ pipeline {
                 }
             }
         }
-        stage('push db') {
-            steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
-                    script {
-                        // Build the Docker image for auth
-                        sh 'sudo docker push cyprientemateu/sixfure-db:v1.0.0'
-                    }
-                }
-            }
-        }
         stage('Build redis') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
@@ -112,16 +92,6 @@ pipeline {
                         // Build the Docker image for redis
                         sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 -f redis/Dockerfile .'
                         sh 'sudo docker images'
-                    }
-                }
-            }
-        }
-        stage('push redis') {
-            steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
-                    script {
-                        // Build the Docker image for auth
-                        sh 'sudo docker push cyprientemateu/sixfure-redis:v1.0.0'
                     }
                 }
             }
@@ -144,6 +114,34 @@ pipeline {
                         // Build the docker image for weather
                         sh 'sudo docker build -t cyprientemateu/sixfure-weather:v1.0.0 -f weather/Dockerfile .'
                         sh 'sudo docker images'
+                    }
+                }
+            }
+        }
+        stage("Login Into CCT Docker Hub"){
+             steps {
+              withCredentials([
+                usernamePassword(credentialsId: 'jenkins-dockerhub-token', 
+                usernameVariable: 'DOCKER_HUB_USERNAME', 
+                passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                  sh """
+                    sudo docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+                  """
+                  
+                }
+            }
+        }
+        stage('Pushing Into CCT Docker Hub') {
+            steps {
+                script {
+                    dir("${WORKSPACE}/application") {
+                        sh """
+                            sudo docker push cyprientemateu/sixfure-auth:v1.0.0
+                            sudo docker push cyprientemateu/sixfure-db:v1.0.0
+                            sudo docker push cyprientemateu/sixfure-redis:v1.0.0
+                            sudo docker push cyprientemateu/sixfure-ui:v.1.0
+                            sudo docker push cyprientemateu/sixfure-weather:v1.0.0
+                        """
                     }
                 }
             }
