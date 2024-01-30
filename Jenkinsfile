@@ -18,11 +18,11 @@ pipeline {
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: '')
         string(name: 'SONAR_VERSION', defaultValue: '5.0.1.3006', description: '')
-        string (name: 'AUTH_IMAGE_TAG', defaultValue: 'latest', description: '')
-        string (name: 'DB_IMAGE_TAG', defaultValue: 'latest', description: '')
-        string (name: 'REDIS_IMAGE_TAG', defaultValue: 'latest', description: '')
-        string (name: 'UI_IMAGE_TAG', defaultValue: 'latest', description: '')
-        string (name: 'WEATHER_IMAGE_TAG', defaultValue: 'latest', description: '')
+        string (name: 'AUTH_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
+        string (name: 'DB_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
+        string (name: 'REDIS_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
+        string (name: 'UI_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
+        string (name: 'WEATHER_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
     }
     stages {
         stage ('Checkout') {
@@ -68,7 +68,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker build -t cyprientemateu/sixfure-auth -f auth/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-auth:v1.0.0 -f auth/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -79,7 +79,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker push cyprientemateu/sixfure-auth:latest'
+                        sh 'sudo docker push cyprientemateu/sixfure-auth:v1.0.0'
                     }
                 }
             }
@@ -89,7 +89,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for db
-                        sh 'sudo docker build -t cyprientemateu/sixfure-db -f db/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-db:v1.0.0 -f db/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -100,7 +100,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker push cyprientemateu/sixfure-db:latest'
+                        sh 'sudo docker push cyprientemateu/sixfure-db:v1.0.0'
                     }
                 }
             }
@@ -110,7 +110,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for redis
-                        sh 'sudo docker build -t cyprientemateu/sixfure-redis -f redis/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 -f redis/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -121,7 +121,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker push cyprientemateu/sixfure-redis:latest'
+                        sh 'sudo docker push cyprientemateu/sixfure-redis:v1.0.0'
                     }
                 }
             }
@@ -131,7 +131,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the Docker image for ui
-                        sh 'sudo docker build -t cyprientemateu/sixfure-ui -f ui/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-ui:v1.0.0 -f ui/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -142,7 +142,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
                         // Build the docker image for weather
-                        sh 'sudo docker build -t cyprientemateu/sixfure-weather -f weather/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-weather:v1.0.0 -f weather/Dockerfile .'
                         sh 'sudo docker images'
                     }
                 }
@@ -155,7 +155,7 @@ pipeline {
         //         dir("${WORKSPACE}/tcc-weather-app") {
         //             script {
         //                 // Deploy the Docker image to a registry or run it on a server
-        //                 sh 'docker push your-docker-image-name:latest'
+        //                 sh 'docker push your-docker-image-name:v1.0.0'
 
         //                 // Example: Deploy to a Docker Swarm
         //                 sh 'docker stack deploy -c docker-compose.yml your-stack-name'
