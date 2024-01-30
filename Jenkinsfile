@@ -65,10 +65,10 @@ pipeline {
         // }
         stage('Build auth') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code/auth") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker build -t cyprientemateu/sixfure-auth:v1.0.0 -f auth/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-auth:v1.0.0 -f .'
                         sh 'sudo docker images'
                     }
                 }
@@ -76,10 +76,10 @@ pipeline {
         }
         stage('Build db') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code/db") {
                     script {
                         // Build the Docker image for db
-                        sh 'sudo docker build -t cyprientemateu/sixfure-db:v1.0.0 -f db/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-db:v1.0.0 -f .'
                         sh 'sudo docker images'
                     }
                 }
@@ -87,10 +87,10 @@ pipeline {
         }
         stage('Build redis') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code/redis") {
                     script {
                         // Build the Docker image for redis
-                        sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 -f redis/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 -f .'
                         sh 'sudo docker images'
                     }
                 }
@@ -98,10 +98,10 @@ pipeline {
         }
         stage('Build ui') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code/ui") {
                     script {
                         // Build the Docker image for ui
-                        sh 'sudo docker build -t cyprientemateu/sixfure-ui:v1.0.0 -f ui/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-ui:v1.0.0 -f .'
                         sh 'sudo docker images'
                     }
                 }
@@ -109,10 +109,10 @@ pipeline {
         }
         stage('Build weather') {
             steps {
-                dir("${WORKSPACE}/tcc-weather-app/code") {
+                dir("${WORKSPACE}/tcc-weather-app/code/weather") {
                     script {
                         // Build the docker image for weather
-                        sh 'sudo docker build -t cyprientemateu/sixfure-weather:v1.0.0 -f weather/Dockerfile .'
+                        sh 'sudo docker build -t cyprientemateu/sixfure-weather:v1.0.0 .'
                         sh 'sudo docker images'
                     }
                 }
@@ -134,7 +134,7 @@ pipeline {
         stage('Pushing Into CCT Docker Hub') {
             steps {
                 script {
-                    dir("${WORKSPACE}/application") {
+                    dir("${WORKSPACE}/tcc-weather-app") {
                         sh """
                             sudo docker push cyprientemateu/sixfure-auth:v1.0.0
                             sudo docker push cyprientemateu/sixfure-db:v1.0.0
