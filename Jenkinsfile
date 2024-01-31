@@ -52,17 +52,17 @@ pipeline {
                 }
             }
         }
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         dir("${WORKSPACE}/tcc-weather-app/code") {
-        //             script {
-        //                 withSonarQubeEnv('SonarScanner') {
-        //                     sh "sonar-scanner"
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('SonarQube Analysis') {
+            steps {
+                dir("${WORKSPACE}/tcc-weather-app/code") {
+                    script {
+                        withSonarQubeEnv('SonarScanner') {
+                            sh "sonar-scanner"
+                        }
+                    }
+                }
+            }
+        }
         stage('Build auth') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code/auth") {
