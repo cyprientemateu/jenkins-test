@@ -197,7 +197,7 @@ pipeline {
         }
         stage('Deploying The Application') {
              agent {
-                label 'deploy'
+                label 'builder'
             }
             steps {
                 script {
