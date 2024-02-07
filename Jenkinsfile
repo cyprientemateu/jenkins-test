@@ -196,7 +196,7 @@ pipeline {
             }
         }
         stage('Deploying The Application') {
-             agent {
+            agent {
                 label 'builder'
             }
             steps {
@@ -212,6 +212,9 @@ pipeline {
             }
         }
         stage('Check Services') {
+            agent {
+                label 'builder'
+            }
             steps {
                 script {
                     sh """
