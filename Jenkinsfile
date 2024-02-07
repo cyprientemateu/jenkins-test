@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'builder'
+        label ''
     }
     triggers {
         githubPush()
