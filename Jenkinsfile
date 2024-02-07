@@ -118,7 +118,7 @@ pipeline {
                 }
             }
         }
-        stage("Login Into CCT Docker Hub"){
+        stage("Login Into TCC Docker Hub"){
              steps {
               withCredentials([
                 usernamePassword(credentialsId: 'jenkins-dockerhub-token', 
@@ -131,7 +131,7 @@ pipeline {
                 }
             }
         }
-        stage('Pushing Into CCT Docker Hub') {
+        stage('Pushing Into TCC Docker Hub') {
             steps {
                 script {
                     dir("${WORKSPACE}/tcc-weather-app") {
