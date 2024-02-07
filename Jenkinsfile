@@ -17,7 +17,7 @@ pipeline {
     }
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: '')
-        string(name: 'SONAR_VERSION', defaultValue: '5.0.1.3006', description: '')
+        string(name: 'SONAR_TAG', defaultValue: '5.0.1.3006', description: '')
         string (name: 'AUTH_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
         string (name: 'DB_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
         string (name: 'REDIS_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
@@ -146,6 +146,48 @@ pipeline {
                 }
             }
         }
+        stage('Set variables') {
+            // agent {
+            //     label 'deploy'
+            // }
+            steps {
+                script {
+                     dir("${WORKSPACE}/tcc-weather-app/code") {
+                        withCredentials([
+                        usernamePassword(credentialsId: 'weather-app-redis-cred', 
+                        usernameVariable: 'REDIS_USERNAME', 
+                        passwordVariable: 'REDIS_PASSWORD'),
+
+                        string(credentialsId: 'weather-app-api-key', 
+                        variable: 'API_TOKEN'),
+
+                        string(credentialsId: 'weather-app-mysql-root-password', 
+                        variable: 'MYSQL_ROOT_PASSWORD'),
+
+                        string(credentialsId: 'weather-app-mysql-password', 
+                        variable: 'MYSQL_PASSWORD')]) {
+                            settingUpVariable()
+                        }
+                     }
+                }
+            }
+        }
+        stage("Pulling Images From Docker Hub"){
+            //  agent {
+            //     label 'deploy'
+            // }
+             steps {
+              withCredentials([
+                usernamePassword(credentialsId: 'jenkins-dockerhub-token', 
+                usernameVariable: 'DOCKER_HUB_USERNAME', 
+                passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                  sh """
+                    sudo docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+                  """
+                  pullImages()
+                }
+            }
+        }
 
         // New stage: Deploy
         // stage('Deploy') {
@@ -198,4 +240,31 @@ pipeline {
             "\n Build url : ${env.BUILD_URL}"
         }   
     }
+}
+
+def settingUpVariable() {
+    sh """
+    sed -i "s|DB_IMAGE_TAG|${params.DB_IMAGE_TAG}|g" docker-compose.yml
+    sed -i "s|REDIS_IMAGE_TAG|${params.REDIS_IMAGE_TAG}|g" docker-compose.yml
+    sed -i "s|UI_IMAGE_TAG|${params.UI_IMAGE_TAG}|g" docker-compose.yml
+    sed -i "s|WEATHER_IMAGE_TAG|${params.WEATHER_IMAGE_TAG}|g" docker-compose.yml
+    sed -i "s|AUTH_IMAGE_TAG|${params.AUTH_IMAGE_TAG}|g" docker-compose.yml
+    
+    sed -i "s|WEATHER_APP_REDIS_PASSWORD_USERNAME|${REDIS_USERNAME}|g" docker-compose.yml
+    sed -i "s|WEATHER_APP_REDIS_PASSWORD|${REDIS_PASSWORD}|g" docker-compose.yml
+    sed -i "s|WEATHER_API-TOKEN|${API_TOKEN}|g" docker-compose.yml
+    sed -i "s|WEATHER_APP_MYSQL_ROOT_PASSWORD|${MYSQL_ROOT_PASSWORD}|g" docker-compose.yml
+    sed -i "s|WEATHER_APP_MYSQL_PASSWORD|${MYSQL_PASSWORD}|g" docker-compose.yml
+    cat docker-compose.yml
+    """
+}
+
+def pullImages() {
+    sh """
+    sudo docker pull ${env.DOCKER_HUB_REGISTRY}/sixfure-db:${params.DB_IMAGE_TAG}
+    sudo docker pull ${env.DOCKER_HUB_REGISTRY}/sixfure-redis:${params.REDIS_IMAGE_TAG}
+    sudo docker pull ${env.DOCKER_HUB_REGISTRY}/sixfure-ui:${params.UI_IMAGE_TAG}
+    sudo docker pull ${env.DOCKER_HUB_REGISTRY}/sixfure-weather:${params.WEATHER_IMAGE_TAG}
+    sudo docker pull ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG}
+    """
 }
