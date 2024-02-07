@@ -6,7 +6,7 @@ pipeline {
         githubPush()
     }
     environment {
-        DOCKER_HUB_REGISTRY = "cyprientemateu"
+        DOCKER_HUB_REGISTRY = "${env.DOCKER_HUB_REGISTRY}"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '2'))
@@ -42,7 +42,7 @@ pipeline {
                         extensions: [[$class: 'LocalBranch']],
                         submoduleCfg: [],
                         userRemoteConfigs: [[
-                            url: 'https://github.com/cyprientemateu/jenkins-test.git',
+                            url: 'https://github.com/${env.DOCKER_HUB_REGISTRY}/jenkins-test.git',
                             credentialsId: 'github-auth'
                         ]]
                     ])
@@ -75,7 +75,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/auth") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker build -t cyprientemateu/sixfure-auth:v1.0.0 .'
+                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG} .'
                         sh 'sudo docker images'
                     }
                 }
@@ -86,7 +86,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/db") {
                     script {
                         // Build the Docker image for db
-                        sh 'sudo docker build -t cyprientemateu/sixfure-db:v1.0.0 .'
+                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-db:${params.DB_IMAGE_TAG} .'
                         sh 'sudo docker images'
                     }
                 }
@@ -97,7 +97,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/redis") {
                     script {
                         // Build the Docker image for redis
-                        sh 'sudo docker build -t cyprientemateu/sixfure-redis:v1.0.0 .'
+                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-redis:${params.REDIS_IMAGE_TAG} .'
                         sh 'sudo docker images'
                     }
                 }
@@ -108,7 +108,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/ui") {
                     script {
                         // Build the Docker image for ui
-                        sh 'sudo docker build -t cyprientemateu/sixfure-ui:v1.0.0 .'
+                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-ui:${params.UI_IMAGE_TAG} .'
                         sh 'sudo docker images'
                     }
                 }
@@ -119,7 +119,7 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/weather") {
                     script {
                         // Build the docker image for weather
-                        sh 'sudo docker build -t cyprientemateu/sixfure-weather:v1.0.0 .'
+                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-weather:${params.WEATHER_IMAGE_TAG} .'
                         sh 'sudo docker images'
                     }
                 }
@@ -143,11 +143,11 @@ pipeline {
                 script {
                     dir("${WORKSPACE}/tcc-weather-app") {
                         sh """
-                            sudo docker push cyprientemateu/sixfure-auth:v1.0.0
-                            sudo docker push cyprientemateu/sixfure-db:v1.0.0
-                            sudo docker push cyprientemateu/sixfure-redis:v1.0.0
-                            sudo docker push cyprientemateu/sixfure-ui:v1.0.0
-                            sudo docker push cyprientemateu/sixfure-weather:v1.0.0
+                            sudo docker push ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG}
+                            sudo docker push ${env.DOCKER_HUB_REGISTRY}/sixfure-db:${params.DB_IMAGE_TAG}
+                            sudo docker push ${env.DOCKER_HUB_REGISTRY}/sixfure-redis:${params.REDIS_IMAGE_TAG}
+                            sudo docker push ${env.DOCKER_HUB_REGISTRY}/sixfure-ui:${params.UI_IMAGE_TAG}
+                            sudo docker push ${env.DOCKER_HUB_REGISTRY}/sixfure-weather:${params.WEATHER_IMAGE_TAG}
                         """
                     }
                 }
@@ -218,7 +218,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        sleep 60
+                        sleep 30
                         sudo docker stack ls
                         sudo docker service ls
                         sudo docker ps
