@@ -203,8 +203,8 @@ pipeline {
                 script {
                      dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
                         sh """
-                            sudo docker stack rm weather-app
-                            sudo docker stack init
+                            sudo docker swarm init
+                            sleep 5
                             sudo docker stack deploy -c docker-compose.yml weather-app
                         """
                      }
