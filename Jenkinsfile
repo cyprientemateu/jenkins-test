@@ -195,6 +195,32 @@ pipeline {
                 }
             }
         }
+        stage('Deploying The Application') {
+             agent {
+                label 'deploy'
+            }
+            steps {
+                script {
+                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
+                        sh """
+                            sudo docker stack deploy -c docker-compose.yaml weather-app
+                        """
+                     }
+                }
+            }
+        }
+        stage('Check Services') {
+            steps {
+                script {
+                    sh """
+                        sleep 60
+                        sudo docker stack ls
+                        sudo docker service ls
+                        sudo docker ps
+                    """
+                }
+            }
+        }
 
         // New stage: Deploy
         // stage('Deploy') {
