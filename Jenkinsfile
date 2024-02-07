@@ -25,6 +25,13 @@ pipeline {
         string (name: 'WEATHER_IMAGE_TAG', defaultValue: 'v1.0.0', description: '')
     }
     stages {
+        stage ('Sanity Check') {
+            steps {
+                script {
+                   sanityChecks()
+                }
+            }
+        }
         stage ('Checkout') {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app") {
@@ -268,3 +275,12 @@ def pullImages() {
     sudo docker pull ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG}
     """
 }
+
+def sanityChecks() {
+    if (params.BRANCH_NAME.isEmpty()) {
+        println('Parameter BRANCH_NAME is not set')
+        sh """
+            exit 2
+        """
+    }
+}        
