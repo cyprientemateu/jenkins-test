@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label ''
+        label 'builder'
     }
     triggers {
         githubPush()
@@ -152,7 +152,7 @@ pipeline {
             // }
             steps {
                 script {
-                     dir("${WORKSPACE}/tcc-weather-app/code") {
+                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
                         withCredentials([
                         usernamePassword(credentialsId: 'weather-app-redis-cred', 
                         usernameVariable: 'REDIS_USERNAME', 
