@@ -75,8 +75,10 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/auth") {
                     script {
                         // Build the Docker image for auth
-                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG} .'
-                        sh 'sudo docker images'
+                        sh """
+                            sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG} .
+                            sudo docker images
+                        """
                     }
                 }
             }
@@ -86,8 +88,10 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/db") {
                     script {
                         // Build the Docker image for db
-                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-db:${params.DB_IMAGE_TAG} .'
-                        sh 'sudo docker images'
+                        sh """
+                            sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-db:${params.DB_IMAGE_TAG} .
+                            sudo docker images
+                        """
                     }
                 }
             }
@@ -97,8 +101,10 @@ pipeline {
                 dir("${WORKSPACE}/tcc-weather-app/code/redis") {
                     script {
                         // Build the Docker image for redis
-                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-redis:${params.REDIS_IMAGE_TAG} .'
-                        sh 'sudo docker images'
+                        sh """
+                            sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-redis:${params.REDIS_IMAGE_TAG} .
+                            sudo docker images
+                        """
                     }
                 }
             }
@@ -107,9 +113,10 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code/ui") {
                     script {
-                        // Build the Docker image for ui
-                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-ui:${params.UI_IMAGE_TAG} .'
-                        sh 'sudo docker images'
+                        sh """
+                            sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-ui:${params.UI_IMAGE_TAG} .
+                            sudo docker images
+                        """
                     }
                 }
             }
@@ -118,9 +125,10 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code/weather") {
                     script {
-                        // Build the docker image for weather
-                        sh 'sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-weather:${params.WEATHER_IMAGE_TAG} .'
-                        sh 'sudo docker images'
+                        sh """
+                            sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-weather:${params.WEATHER_IMAGE_TAG} .
+                            sudo docker images
+                        """
                     }
                 }
             }
