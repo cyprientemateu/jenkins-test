@@ -6,7 +6,7 @@ pipeline {
         githubPush()
     }
     environment {
-        DOCKER_HUB_REGISTRY = "${env.DOCKER_HUB_REGISTRY}"
+        DOCKER_HUB_REGISTRY = "cyprientemateu"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '2'))
@@ -42,7 +42,7 @@ pipeline {
                         extensions: [[$class: 'LocalBranch']],
                         submoduleCfg: [],
                         userRemoteConfigs: [[
-                            url: 'https://github.com/${env.DOCKER_HUB_REGISTRY}/jenkins-test.git',
+                            url: 'https://github.com/cyprientemateu/jenkins-test.git',
                             credentialsId: 'github-auth'
                         ]]
                     ])
