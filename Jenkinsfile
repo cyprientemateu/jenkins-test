@@ -53,7 +53,6 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code") {
                     script {
-                        // Use 'cat' command to display the content of sonar-project.properties
                         sh 'cat sonar-project.properties'
                     }
                 }
@@ -74,7 +73,6 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code/auth") {
                     script {
-                        // Build the Docker image for auth
                         sh """
                             sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-auth:${params.AUTH_IMAGE_TAG} .
                             sudo docker images
@@ -87,7 +85,6 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code/db") {
                     script {
-                        // Build the Docker image for db
                         sh """
                             sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-db:${params.DB_IMAGE_TAG} .
                             sudo docker images
@@ -100,7 +97,6 @@ pipeline {
             steps {
                 dir("${WORKSPACE}/tcc-weather-app/code/redis") {
                     script {
-                        // Build the Docker image for redis
                         sh """
                             sudo docker build -t ${env.DOCKER_HUB_REGISTRY}/sixfure-redis:${params.REDIS_IMAGE_TAG} .
                             sudo docker images
@@ -234,22 +230,6 @@ pipeline {
                 }
             }
         }
-
-        // New stage: Deploy
-        // stage('Deploy') {
-        //     steps {
-        //         dir("${WORKSPACE}/tcc-weather-app") {
-        //             script {
-        //                 // Deploy the Docker image to a registry or run it on a server
-        //                 sh 'docker push your-docker-image-name:v1.0.0'
-
-        //                 // Example: Deploy to a Docker Swarm
-        //                 sh 'docker stack deploy -c docker-compose.yml your-stack-name'
-        //             }
-        //         }
-        //     }
-        // }
-
     }
     post {
         
