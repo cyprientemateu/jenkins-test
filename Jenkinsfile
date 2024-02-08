@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label ''
+        label 'builder'
     }
     triggers {
         githubPush()
@@ -162,9 +162,9 @@ pipeline {
             }
         }
         stage('Set variables') {
-            // agent {
-            //     label 'deploy'
-            // }
+            agent {
+                label 'builder'
+            }
             steps {
                 script {
                      dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
@@ -188,10 +188,10 @@ pipeline {
             }
         }
         stage("Pulling Images From Docker Hub"){
-            //  agent {
-            //     label 'deploy'
-            // }
-             steps {
+            agent {
+                label 'builder'
+            }
+            steps {
               withCredentials([
                 usernamePassword(credentialsId: 'jenkins-dockerhub-token', 
                 usernameVariable: 'DOCKER_HUB_USERNAME', 
