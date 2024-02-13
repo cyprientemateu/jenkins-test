@@ -163,7 +163,7 @@ pipeline {
             }
             steps {
                 script {
-                     dir("${WORKSPACE}/tcc-weather-app/") {
+                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
                         withCredentials([
                         usernamePassword(credentialsId: 'weather-app-redis-cred', 
                         usernameVariable: 'REDIS_USERNAME', 
@@ -205,9 +205,10 @@ pipeline {
             }
             steps {
                 script {
-                     dir("${WORKSPACE}/tcc-weather-app/code") {
+                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
                         sh """
                             sudo docker swarm init
+                            sleep 10
                             sudo docker stack deploy -c docker-compose.yml weather-app
                         """
                      }
@@ -226,6 +227,17 @@ pipeline {
                         sudo docker service ls
                         sudo docker ps
                     """
+                }
+            }
+        }
+        stage('Clean Up') {
+            steps {
+                script {
+                    dir("${WORKSPACE}/tcc-weather-app") {
+                        sh """
+                            sudo rm -rf *
+                        """
+                    }
                 }
             }
         }
