@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'builder'
+        label ''
     }
     triggers {
         githubPush()
@@ -159,7 +159,7 @@ pipeline {
         }
         stage('Set variables') {
             agent {
-                label 'builder'
+                label ''
             }
             steps {
                 script {
@@ -185,7 +185,7 @@ pipeline {
         }
         stage("Pulling Images From Docker Hub"){
             agent {
-                label 'builder'
+                label ''
             }
             steps {
               withCredentials([
@@ -201,7 +201,7 @@ pipeline {
         }
         stage('Deploying The Application') {
             agent {
-                label 'builder'
+                label ''
             }
             steps {
                 script {
@@ -216,7 +216,7 @@ pipeline {
         }
         stage('Check Services') {
             agent {
-                label 'builder'
+                label ''
             }
             steps {
                 script {
