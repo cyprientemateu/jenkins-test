@@ -163,7 +163,7 @@ pipeline {
             }
             steps {
                 script {
-                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
+                     dir("${WORKSPACE}/tcc-weather-app/code") {
                         withCredentials([
                         usernamePassword(credentialsId: 'weather-app-redis-cred', 
                         usernameVariable: 'REDIS_USERNAME', 
