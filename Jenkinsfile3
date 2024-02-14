@@ -2,10 +2,9 @@ pipeline {
     agent {
         label ''
     }
-
-    // triggers {
-    //     githubPush()
-    // }
+    triggers {
+        githubPush()
+    }
     environment {
         ECR_REPOSITORY_URI = "${params.AWS_ACCOUNT_NUMBER}.dkr.ecr.${params.AWS_REGION}.amazonaws.com"
         UI_ECR_IMAGE_REPOSITORY_NAME = "tcc-weather-app-ui"
