@@ -158,12 +158,12 @@ pipeline {
             }
         }
         stage('Set variables') {
-            agent {
-                label ''
-            }
+            // agent {
+            //     label ''
+            // }
             steps {
                 script {
-                     dir("${WORKSPACE}/tcc-weather-app/code") {
+                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
                         withCredentials([
                         usernamePassword(credentialsId: 'weather-app-redis-cred', 
                         usernameVariable: 'REDIS_USERNAME', 
@@ -184,9 +184,9 @@ pipeline {
             }
         }
         stage("Pulling Images From Docker Hub"){
-            agent {
-                label ''
-            }
+            // agent {
+            //     label ''
+            // }
             steps {
               withCredentials([
                 usernamePassword(credentialsId: 'jenkins-dockerhub-token', 
@@ -200,12 +200,12 @@ pipeline {
             }
         }
         stage('Deploying The Application') {
-            agent {
-                label ''
-            }
+            // agent {
+            //     label ''
+            // }
             steps {
                 script {
-                     dir("${WORKSPACE}/tcc-weather-app/code") {
+                     dir("${WORKSPACE}/tcc-weather-app/docker-stack") {
                         sh """
                             sudo docker swarm init
                             sleep 10
@@ -216,9 +216,9 @@ pipeline {
             }
         }
         stage('Check Services') {
-            agent {
-                label ''
-            }
+            // agent {
+            //     label ''
+            // }
             steps {
                 script {
                     sh """
